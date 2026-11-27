@@ -199,3 +199,10 @@ a.button.ghost { background: transparent; color: var(--text); border: 1px solid 
 .footer nav { gap: 16px; margin-bottom: 8px; }
 .grid.plans { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
 .plans .price .muted { font-size: 16px; font-weight: 500; }
+
+/* phase 2: Discord */
+a.button.discord, button.discord { background: #5865f2; color: #fff; }
+.topnav .row { gap: 8px; flex-wrap: nowrap; }
+.list .right { margin-left: auto; }
+p.warn { color: var(--text); }
+@media (max-width: 720px) { .topnav a.button.ghost { display: none; } }

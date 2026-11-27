@@ -1,5 +1,6 @@
 import type { PrivacySettings } from '@skystats/api-client';
 import { useEffect, useState } from 'react';
+import { DiscordSection, SessionsSection } from '../components/AccountSections';
 import { api } from '../lib/api';
 import { Link, navigate } from '../lib/router';
 import { useSession } from '../lib/session';
@@ -10,6 +11,8 @@ const FIELDS: { key: keyof PrivacySettings; title: string; help: string }[] = [
   { key: 'profilePublic', title: 'Public profile', help: 'Anyone can see a summary of your profiles at your public link and through the Discord bot.' },
   { key: 'showOnLeaderboards', title: 'Show me on leaderboards', help: 'Your name and coin gains can appear on public leaderboards.' },
   { key: 'allowActivityPings', title: 'Let my co-op get activity alerts', help: 'Co-op members can be told when you come online or start grinding.' },
+  { key: 'discordPublic', title: 'Show my Minecraft name on Discord', help: 'People can find your Minecraft name with the bot\u2019s /whois, and you get the \u201cLinked\u201d role in the SkyStats server.' },
+  { key: 'showTierRole', title: 'Show my plan as a Discord role', help: 'You get a Pro or Max role in the SkyStats Discord server.' },
 ];
 
 export function SettingsPage() {
@@ -90,6 +93,9 @@ export function SettingsPage() {
           </p>
         )}
       </section>
+
+      <DiscordSection />
+      <SessionsSection />
 
       <section className="card">
         <h2>Download your data</h2>

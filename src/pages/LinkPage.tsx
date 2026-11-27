@@ -19,6 +19,7 @@ export function LinkPage() {
   const [now, setNow] = useState(Date.now());
   const [copied, setCopied] = useState(false);
   const started = useRef(false);
+  const discordNotice = DISCORD_RESULTS[new URLSearchParams(window.location.search).get('discord') ?? ''];
 
   const newCode = useCallback(async () => {
     setState({ step: 'loading' });
@@ -127,6 +128,8 @@ export function LinkPage() {
         never leaves Minecraft.
       </p>
 
+      {discordNotice && <p className="notice">{discordNotice}</p>}
+
       <section className="card link-card">
         {state.step === 'loading' && <p className="muted">Getting a code…</p>}
 
@@ -187,6 +190,21 @@ export function LinkPage() {
           </>
         )}
       </section>
+
+      <section className="card center">
+        <h2>Already linked?</h2>
+        <p className="muted small">If you&rsquo;ve connected Discord to your SkyStats account, you can sign in with it instead.</p>
+        <a className="button discord" href={api.discord.startUrl('login')}>
+          Sign in with Discord
+        </a>
+      </section>
     </main>
   );
 }
+
+const DISCORD_RESULTS: Record<string, string> = {
+  not_linked: 'That Discord account isn\u2019t connected to SkyStats yet. Link Minecraft below first, then connect Discord in Privacy settings.',
+  cancelled: 'Discord sign-in was cancelled.',
+  expired: 'That sign-in link expired. Try again.',
+  invalid: 'Sign-in didn\u2019t match this browser. Try again from this page.',
+};

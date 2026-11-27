@@ -1,3 +1,4 @@
+import { api } from '../lib/api';
 import { avatarUrl } from '../lib/format';
 import { Link, usePath } from '../lib/router';
 import { useSession } from '../lib/session';
@@ -33,9 +34,14 @@ export function Header() {
               {account.username}
             </Link>
           ) : (
-            <Link href="/link" className="button">
-              Link Minecraft
-            </Link>
+            <span className="row">
+              <a className="button ghost" href={api.discord.startUrl('login')}>
+                Sign in with Discord
+              </a>
+              <Link href="/link" className="button">
+                Link Minecraft
+              </Link>
+            </span>
           )}
         </div>
       </div>
