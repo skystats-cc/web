@@ -1,6 +1,6 @@
 # skystats web
 
-The skystats.cc website. Right now: a Hypixel status bar, a status card, and an API ping check. This is where the dashboard, bazaar pages and co-op tracking will live.
+The skystats.cc website: Hypixel status, **Link Minecraft** (pairing with the mod), and **My profiles** (your SkyBlock profiles with co-op members). This is where the dashboard and bazaar pages will live.
 
 **Stack:** Vite · React 19 · TypeScript · `@skystats/api-client` (typed client from `api-spec`) · Caddy (production)
 
@@ -12,6 +12,10 @@ npm run dev        # http://localhost:5173
 ```
 
 Run the server locally too (`npm run dev:api` in `server`). Vite forwards `/v1`, `/healthz`, `/readyz` to `http://localhost:3000`. Override with `VITE_API_PROXY=http://other-host:3000 npm run dev`.
+
+## Linking Minecraft
+
+`/link` asks the API for a pairing code and shows `/skystats link ABCD-EFGH` with a Copy button. The player pastes it in game and clicks **[Confirm]**; the mod proves their identity through Mojang and claims the code. The page polls every 2s and receives an HttpOnly session cookie when it's claimed.
 
 ## How it talks to the API
 
@@ -25,9 +29,12 @@ The app always calls the API **same-origin** (`/v1/...`). In dev Vite proxies it
 
 ```
 src/
-  App.tsx              page layout
-  components/          StatusBar (site-wide "is SkyBlock down?"), StatusCard, PingCard
-  lib/api.ts           the API client
+  App.tsx              layout + routes (/, /link, /me)
+  pages/               HomePage, LinkPage (pairing code + copy command), ProfilesPage (profiles + co-op)
+  components/          Header, StatusBar (site-wide "is SkyBlock down?"), StatusCard, PingCard
+  lib/api.ts           the API client (cookie session, same-origin)
+  lib/session.tsx      who's signed in (asks /v1/me; the cookie itself is HttpOnly)
+  lib/router.tsx       tiny client-side router
   lib/usePoll.ts       polling hook (pauses when the tab is hidden)
-  lib/status.ts        status helpers (+ tests)
+  lib/status.ts, format.ts   helpers (+ tests)
 ```
