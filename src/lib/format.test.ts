@@ -1,0 +1,15 @@
+import { describe, expect, it } from 'vitest';
+import { coins, mmss } from './format';
+
+describe('format', () => {
+  it('coins', () => {
+    expect(coins(4_200_000.25)).toBe('4.2M');
+    expect(coins(125_000_000.5)).toBe('125M');
+    expect(coins(null)).toBe('—');
+  });
+  it('mmss', () => {
+    expect(mmss(600_000)).toBe('10:00');
+    expect(mmss(61_000)).toBe('1:01');
+    expect(mmss(-5)).toBe('0:00');
+  });
+});

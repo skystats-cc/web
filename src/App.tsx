@@ -1,35 +1,29 @@
-import { PingCard } from './components/PingCard';
+import { Header } from './components/Header';
 import { StatusBar } from './components/StatusBar';
-import { StatusCard } from './components/StatusCard';
 import { api } from './lib/api';
 import { usePoll } from './lib/usePoll';
+import { usePath } from './lib/router';
+import { SessionProvider } from './lib/session';
+import { HomePage } from './pages/HomePage';
+import { LinkPage } from './pages/LinkPage';
+import { ProfilesPage } from './pages/ProfilesPage';
 
 export function App() {
-  // One status poll shared by the top bar and the card
+  // One status poll shared by the top bar and the home page card
   const status = usePoll(() => api.status(), 60_000);
+  const path = usePath();
+
+  let page;
+  if (path === '/link') page = <LinkPage />;
+  else if (path === '/me') page = <ProfilesPage />;
+  else page = <HomePage status={status} />;
 
   return (
-    <>
+    <SessionProvider>
       <StatusBar status={status.data} error={status.error} />
-      <header className="hero">
-        <div className="wrap">
-          <div className="brand">
-            <img src="/favicon.svg" alt="" width={36} height={36} />
-            <span>SkyStats<span className="dim">.cc</span></span>
-          </div>
-          <h1>SkyBlock money tracking, done properly.</h1>
-          <p className="lede">
-            Co-op tracking, money-making method metrics and full bazaar history. We're building it now.
-          </p>
-        </div>
-      </header>
-      <main className="wrap grid">
-        <StatusCard {...status} />
-        <PingCard />
-      </main>
-      <footer className="wrap footer">
-        Not affiliated with Hypixel. Status data from status.hypixel.net.
-      </footer>
-    </>
+      <Header />
+      {page}
+      <footer className="wrap footer">Not affiliated with Hypixel. Status data from status.hypixel.net.</footer>
+    </SessionProvider>
   );
 }
