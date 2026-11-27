@@ -151,3 +151,51 @@ a.button.big { padding: 11px 20px; font-size: 16px; margin-top: 8px; }
   .brand .dim { display: none; }
   .chip-account { font-size: 0; gap: 0; padding: 4px; } /* avatar only */
 }
+
+/* phase 1: charts, settings, plans, legal */
+.small { font-size: 13px; }
+.cap { text-transform: capitalize; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+.money { margin-bottom: 20px; }
+.money .stats { margin-bottom: 12px; }
+.value.pos { color: var(--good); }
+.value.neg { color: var(--bad); }
+select { background: var(--bg); color: var(--text); border: 1px solid var(--line); border-radius: 8px; padding: 6px 8px; font: inherit; font-size: 14px; }
+.segmented { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.segmented button { background: transparent; color: var(--muted); border-radius: 0; padding: 6px 10px; }
+.segmented button.on { background: var(--panel); color: var(--text); box-shadow: inset 0 -2px 0 var(--accent); }
+.switch.small { font-size: 13px; }
+.chart { position: relative; margin: 0; }
+.chart svg { width: 100%; height: auto; display: block; touch-action: none; }
+.chart .grid { stroke: var(--line); stroke-width: 1; }
+.chart .tick { fill: var(--muted); font-size: 11px; font-variant-numeric: tabular-nums; }
+.chart .line { fill: none; stroke: var(--accent); stroke-width: 2; stroke-linejoin: round; }
+.chart .band { fill: color-mix(in srgb, var(--accent) 16%, transparent); }
+.chart .crosshair { stroke: var(--muted); stroke-dasharray: 3 3; }
+.chart .dot-point { fill: var(--accent); stroke: var(--bg); stroke-width: 2; }
+.chart-tip { position: absolute; top: 4px; transform: translateX(-50%); background: var(--bg); border: 1px solid var(--line);
+  border-radius: 8px; padding: 4px 8px; font-size: 12px; display: flex; flex-direction: column; pointer-events: none; white-space: nowrap; }
+.chart-empty { padding: 48px 0; text-align: center; }
+.settings { list-style: none; margin: 0; padding: 0; }
+.settings li { display: flex; align-items: center; gap: 16px; padding: 12px 0; border-top: 1px solid var(--line); }
+.settings li:first-child { border-top: 0; }
+.settings p { margin: 2px 0 0; }
+.settings .switch { margin-left: auto; }
+.narrow .card { margin-top: 16px; }
+.danger { border-color: color-mix(in srgb, var(--bad) 40%, var(--line)); }
+button.danger { background: var(--bad); color: #fff; margin-top: 10px; }
+.danger input { display: block; margin-top: 6px; background: var(--bg); color: var(--text); border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; font: inherit; }
+a.button.ghost { background: transparent; color: var(--text); border: 1px solid var(--line); }
+.plans .price { font-size: 28px; font-weight: 700; margin: 6px 0; }
+.plan button, .plan a.button { margin-top: 16px; }
+.terms-summary { margin-top: 20px; }
+.terms-summary li { margin-bottom: 6px; }
+.notice { border-left: 3px solid var(--good); padding-left: 10px; }
+.legal h2 { margin-top: 28px; font-size: 18px; }
+.legal table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.legal th, .legal td { text-align: left; vertical-align: top; padding: 8px; border-top: 1px solid var(--line); }
+.legal th { color: var(--muted); font-weight: 600; }
+.tldr ul { margin: 0; padding-left: 20px; }
+.footer nav { gap: 16px; margin-bottom: 8px; }
+.grid.plans { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.plans .price .muted { font-size: 16px; font-weight: 500; }

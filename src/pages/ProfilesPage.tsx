@@ -1,6 +1,7 @@
 import type { MyProfiles, Profile, ProfileMember } from '@skystats/api-client';
 import { useEffect, useRef, useState } from 'react';
 import { api } from '../lib/api';
+import { MoneyCard } from '../components/MoneyCard';
 import { avatarUrl, coins, GAME_MODES } from '../lib/format';
 import { Link } from '../lib/router';
 import { useSession } from '../lib/session';
@@ -102,6 +103,9 @@ export function ProfilesPage() {
           <button className="ghost" onClick={() => void refresh()} disabled={refreshing}>
             {refreshing ? 'Refreshing…' : 'Refresh'}
           </button>
+          <Link href="/settings" className="button ghost">
+            Privacy
+          </Link>
           <button className="ghost" onClick={() => void session.logout()}>
             Sign out
           </button>
@@ -122,6 +126,8 @@ export function ProfilesPage() {
           <p>No SkyBlock profiles found for {account.username}.</p>
         </section>
       )}
+
+      {data && data.profiles.length > 0 && <MoneyCard profiles={data.profiles} />}
 
       <div className="profiles">
         {data?.profiles.map((p) => <ProfileCard key={p.id} profile={p} />)}
@@ -162,7 +168,7 @@ function MemberRow({ m }: { m: ProfileMember }) {
   if (m.usesMod && m.trackingEnabled) chip = { text: 'SkyStats mod', tone: 'good', title: 'Uses the SkyStats mod' };
   else if (m.trackingEnabled === false) chip = { text: 'Tracking off', tone: 'warn', title: 'Turned tracking off in SkyStats' };
   else if (m.onSkyStats) chip = { text: 'On SkyStats', tone: 'neutral', title: "Has a SkyStats account but the mod hasn't been seen recently" };
-  else chip = { text: 'Not on SkyStats', tone: 'dim', title: 'Data comes from the Hypixel API only' };
+  else chip = { text: 'Not on SkyStats', tone: 'dim', title: 'Not on SkyStats; shown from Hypixel profile data only' };
 
   return (
     <li>
@@ -179,7 +185,9 @@ function MemberRow({ m }: { m: ProfileMember }) {
       <div className="member-stats">
         <div>
           <span className="label">Purse</span>
-          <span className="value">{coins(m.purse)}</span>
+          <span className="value" title={m.purse === null && !m.isYou ? 'Hidden by this player' : undefined}>
+            {coins(m.purse)}
+          </span>
         </div>
         <div>
           <span className="label">SB level</span>

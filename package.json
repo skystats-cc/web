@@ -14,7 +14,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@skystats/api-client": "github:skystats-cc/api-spec#v0.2.0",
+    "@skystats/api-client": "github:skystats-cc/api-spec#v0.3.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1"
   },

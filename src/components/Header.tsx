@@ -23,6 +23,8 @@ export function Header() {
         <nav>
           {nav('/', 'Status')}
           {account && nav('/me', 'My profiles')}
+          {nav('/pricing', 'Plans')}
+          {account && nav('/settings', 'Privacy')}
         </nav>
         <div className="account">
           {loading ? null : account ? (
