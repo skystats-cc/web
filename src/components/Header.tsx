@@ -23,6 +23,8 @@ export function Header() {
         </Link>
         <nav>
           {nav('/', 'Status')}
+          {nav('/bazaar', 'Bazaar')}
+          {nav('/methods', 'Methods')}
           {account && nav('/me', 'My profiles')}
           {account && nav('/alerts', 'Alerts')}
           {nav('/pricing', 'Plans')}

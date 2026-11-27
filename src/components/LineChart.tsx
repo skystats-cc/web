@@ -10,13 +10,15 @@ interface Props {
   formatValue: (v: number) => string;
   formatTime: (t: number) => string;
   label: string; // accessible description
+  /** Vertical markers (e.g. mayor changes, game updates) */
+  markers?: { t: number; label: string }[];
 }
 
 const W = 720;
 const PAD = { top: 12, right: 12, bottom: 26, left: 58 };
 
 /** The one chart used across the site: line, optional band, crosshair tooltip, log scale. */
-export function LineChart({ points, band, height = 240, log = false, formatValue, formatTime, label }: Props) {
+export function LineChart({ points, band, height = 240, log = false, formatValue, formatTime, label, markers = [] }: Props) {
   const svgRef = useRef<SVGSVGElement>(null);
   const [hover, setHover] = useState<number | null>(null);
 
@@ -81,6 +83,14 @@ export function LineChart({ points, band, height = 240, log = false, formatValue
             {formatTime(t)}
           </text>
         ))}
+        {markers
+          .filter((m) => m.t >= points[0]!.t && m.t <= points[points.length - 1]!.t)
+          .map((m, i) => (
+            <g key={i} className="marker">
+              <line x1={geo.x(m.t)} x2={geo.x(m.t)} y1={PAD.top} y2={height - PAD.bottom} />
+              <text x={geo.x(m.t) + 3} y={PAD.top + 10}>{m.label}</text>
+            </g>
+          ))}
         {geo.bandPath && <path d={geo.bandPath} className="band" />}
         <path d={geo.path} className="line" />
         {h && (
