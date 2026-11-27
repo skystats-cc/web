@@ -38,6 +38,8 @@ export function PrivacyNotice() {
           <tr><td>Activity labels for your sessions (farming, mining and so on)</td><td>Only if you turn them on in Privacy settings</td><td>Consent (you can turn it off any time)</td></tr>
           <tr><td>Discord user id and username, if you connect Discord (never your email or servers)</td><td>Sign in with Discord, the bot, and opt-in Discord roles</td><td>Contract</td></tr>
           <tr><td>Alerts, goals, notes, watchlist, custom methods and method votes you create</td><td>To provide those features</td><td>Contract</td></tr>
+          <tr><td>Leaderboard positions, achievements, who you follow, competition entries and a public profile look</td><td>Only for features you turn on or join (leaderboards, public profile, following, competitions)</td><td>Contract</td></tr>
+          <tr><td>Your Discord id and answers in the bot&rsquo;s daily games</td><td>To score the games. No stakes and no prizes</td><td>Legitimate interests</td></tr>
           <tr><td>Notifications we send you, and whether a Discord DM was delivered</td><td>Your inbox and DM delivery</td><td>Contract</td></tr>
           <tr><td>Session records (browser type, when you last used it)</td><td>To keep you signed in and let you sign out other devices</td><td>Contract</td></tr>
           <tr><td>Plan, Stripe customer ID and subscription status (Stripe holds your card details, not us)</td><td>To provide what you paid for</td><td>Contract; legal obligation for tax records</td></tr>
@@ -72,6 +74,7 @@ export function PrivacyNotice() {
           <tr><td>Money history</td><td>7 days on Free, 90 days on Pro, until you delete it on Max. After leaving a paid plan, older history is hidden for 30 days, then deleted.</td></tr>
           <tr><td>Play sessions and rare drops</td><td>The same as money history for your plan</td></tr>
           <tr><td>Notifications</td><td>90 days</td></tr>
+          <tr><td>Daily game answers</td><td>30 days</td></tr>
           <tr><td>Account, profiles, Discord link, alerts, goals, notes and custom methods</td><td>Until you delete them or your account</td></tr>
           <tr><td>Sessions</td><td>30 days (browser) or 90 days (mod), then removed</td></tr>
           <tr><td>Request logs</td><td>Up to 30 days</td></tr>
