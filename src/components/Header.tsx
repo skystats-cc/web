@@ -24,6 +24,7 @@ export function Header() {
         <nav>
           {nav('/', 'Status')}
           {account && nav('/me', 'My profiles')}
+          {account && nav('/alerts', 'Alerts')}
           {nav('/pricing', 'Plans')}
           {account && nav('/settings', 'Privacy')}
         </nav>

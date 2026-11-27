@@ -6,6 +6,7 @@ import { usePath } from './lib/router';
 import { SessionProvider } from './lib/session';
 import { HomePage } from './pages/HomePage';
 import { LinkPage } from './pages/LinkPage';
+import { AlertsPage } from './pages/AlertsPage';
 import { BillingPage } from './pages/BillingPage';
 import { PrivacyNotice } from './pages/legal/PrivacyNotice';
 import { Terms } from './pages/legal/Terms';
@@ -24,6 +25,7 @@ export function App() {
   if (path === '/link') page = <LinkPage />;
   else if (path === '/me') page = <ProfilesPage />;
   else if (path === '/settings') page = <SettingsPage />;
+  else if (path === '/alerts') page = <AlertsPage />;
   else if (path === '/pricing') page = <PricingPage />;
   else if (path === '/billing') page = <BillingPage />;
   else if (path === '/privacy' || path === '/cookies') page = <PrivacyNotice />;

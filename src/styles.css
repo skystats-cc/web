@@ -206,3 +206,15 @@ a.button.discord, button.discord { background: #5865f2; color: #fff; }
 .list .right { margin-left: auto; }
 p.warn { color: var(--text); }
 @media (max-width: 720px) { .topnav a.button.ghost { display: none; } }
+
+/* phase 3: alerts */
+.alert-form { margin-top: 12px; align-items: center; }
+.alert-form input { background: var(--bg); color: var(--text); border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; font: inherit; font-size: 14px; min-width: 0; }
+.alert-form input[list] { flex: 1 1 180px; }
+.quiet { margin-top: 12px; align-items: center; }
+.quiet input { background: var(--bg); color: var(--text); border: 1px solid var(--line); border-radius: 8px; padding: 4px 6px; font: inherit; }
+.inbox li { align-items: flex-start; }
+.inbox li.unread strong::before { content: ''; display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); margin-right: 6px; vertical-align: middle; }
+.inbox p { margin: 2px 0 0; }
+.settings .badge { margin-left: 8px; }
+.inbox .right { text-transform: none; white-space: nowrap; }
