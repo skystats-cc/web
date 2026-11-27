@@ -266,3 +266,35 @@ button.th { background: none; color: inherit; padding: 0; font: inherit; font-we
 .method-form legend { font-weight: 600; padding: 0 6px; }
 .method-row input[list] { flex: 1 1 180px; }
 .method-row input[type=number] { width: 90px; }
+
+/* phase 5: dashboard & co-op */
+.heatmap { display: grid; grid-auto-flow: column; grid-template-rows: repeat(7, 11px); gap: 3px; overflow-x: auto; padding-bottom: 4px; }
+.hm { width: 11px; height: 11px; border-radius: 2px; background: var(--bg); border: 1px solid var(--line); }
+.hm.l1 { background: color-mix(in srgb, var(--good) 30%, var(--bg)); }
+.hm.l2 { background: color-mix(in srgb, var(--good) 55%, var(--bg)); }
+.hm.l3 { background: color-mix(in srgb, var(--good) 75%, var(--bg)); }
+.hm.l4 { background: var(--good); }
+.hm.l-1 { background: color-mix(in srgb, var(--bad) 30%, var(--bg)); }
+.hm.l-2 { background: color-mix(in srgb, var(--bad) 55%, var(--bg)); }
+.hm.l-3 { background: color-mix(in srgb, var(--bad) 75%, var(--bg)); }
+.hm.l-4 { background: var(--bad); }
+.grid.cols2 { grid-template-columns: 1fr 1fr; gap: 12px; }
+.sessions, .breakdown { list-style: none; padding: 0; margin: 0; }
+.sessions li, .breakdown li { display: grid; grid-template-columns: 110px 1fr auto; gap: 8px; align-items: center; padding: 4px 0; }
+.session-bar { height: 10px; border-radius: 3px; background: var(--accent); opacity: 0.8; }
+.session-bar.farming { background: #8bc34a; }
+.session-bar.mining { background: #90a4ae; }
+.session-bar.combat { background: var(--bad); }
+.session-bar.fishing { background: #4fc3f7; }
+.session-bar.foraging { background: #a1887f; }
+.bars2 { display: flex; flex-direction: column; gap: 2px; }
+.pos-bar { height: 6px; border-radius: 2px; background: var(--good); min-width: 1px; }
+.neg-bar { height: 6px; border-radius: 2px; background: var(--bad); min-width: 1px; }
+.small-btn { padding: 0 8px; margin-left: 6px; }
+a.badge { text-decoration: none; }
+.share-bar { display: flex; height: 10px; border-radius: 5px; overflow: hidden; margin-top: 12px; }
+.share-bar .seg.s0 { background: var(--accent); }
+.share-bar .seg.s1 { background: var(--good); }
+.share-bar .seg.s2 { background: #4fc3f7; }
+.share-bar .seg.s3 { background: #ba68c8; }
+.share-bar .seg.s4 { background: #ff8a65; }

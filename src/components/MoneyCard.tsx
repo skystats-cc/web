@@ -15,6 +15,10 @@ export function MoneyCard({ profiles }: { profiles: Profile[] }) {
   const [log, setLog] = useState(false);
   const [data, setData] = useState<MoneyHistory | null>(null);
   const [error, setError] = useState(false);
+  const [notes, setNotes] = useState<{ t: number; label: string }[]>([]);
+  useEffect(() => {
+    if (profileId) api.insight.annotations(profileId).then((r) => setNotes(r.annotations.map((a) => ({ t: new Date(a.at).getTime(), label: a.text.slice(0, 24) })))).catch(() => setNotes([]));
+  }, [profileId]);
 
   useEffect(() => {
     if (!profileId) return;
@@ -94,6 +98,7 @@ export function MoneyCard({ profiles }: { profiles: Profile[] }) {
           points={series.points}
           band={series.band}
           log={log}
+          markers={notes}
           formatValue={coins}
           formatTime={(t) => (short && range === '1d' ? timeFmt.format(t) : dateFmt.format(t))}
           label={`Total coins (purse and banks) over ${range}`}
@@ -102,6 +107,12 @@ export function MoneyCard({ profiles }: { profiles: Profile[] }) {
 
       <p className="muted small">
         Recorded by the SkyStats mod while you play. Purse, personal bank and shared bank added together.
+        {data && data.tier !== 'free' && profileId && (
+          <>
+            {' '}
+            <a href={api.insight.csvUrl(profileId)}>Download CSV</a>.
+          </>
+        )}
         {data?.clippedByTier && (
           <>
             {' '}

@@ -12,6 +12,7 @@ const FIELDS: { key: keyof PrivacySettings; title: string; help: string }[] = [
   { key: 'showOnLeaderboards', title: 'Show me on leaderboards', help: 'Your name and coin gains can appear on public leaderboards.' },
   { key: 'allowActivityPings', title: 'Let my co-op get activity alerts', help: 'Co-op members can be told when you come online or start grinding.' },
   { key: 'discordPublic', title: 'Show my Minecraft name on Discord', help: 'People can find your Minecraft name with the bot\u2019s /whois, and you get the \u201cLinked\u201d role in the SkyStats server.' },
+  { key: 'activityInsights', title: 'Label my sessions by activity', help: 'SkyStats guesses whether each session was farming, mining, combat and so on, from the drops the mod sees. Off unless you turn it on.' },
   { key: 'showTierRole', title: 'Show my plan as a Discord role', help: 'You get a Pro or Max role in the SkyStats Discord server.' },
 ];
 

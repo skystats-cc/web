@@ -1,6 +1,7 @@
 import type { MyProfiles, Profile, ProfileMember } from '@skystats/api-client';
 import { useEffect, useRef, useState } from 'react';
 import { api } from '../lib/api';
+import { Dashboard } from '../components/Dashboard';
 import { MoneyCard } from '../components/MoneyCard';
 import { avatarUrl, coins, GAME_MODES } from '../lib/format';
 import { Link } from '../lib/router';
@@ -132,6 +133,8 @@ export function ProfilesPage() {
       <div className="profiles">
         {data?.profiles.map((p) => <ProfileCard key={p.id} profile={p} />)}
       </div>
+
+      {data && data.profiles.length > 0 && <Dashboard profiles={data.profiles} />}
     </main>
   );
 }
@@ -145,7 +148,11 @@ function ProfileCard({ profile: p }: { profile: Profile }) {
           {p.name ?? 'Profile'}
           {p.selected && <span className="badge accent">Selected</span>}
           {mode && <span className="badge">{mode}</span>}
-          <span className="badge">{p.coop ? `Co-op · ${p.members.length}` : 'Solo'}</span>
+          {p.coop ? (
+            <Link href={`/coop/${p.id}`} className="badge accent">Co-op · {p.members.length} →</Link>
+          ) : (
+            <span className="badge">Solo</span>
+          )}
         </h2>
         {p.bank !== null && (
           <div className="bank" title="Shared bank balance">
