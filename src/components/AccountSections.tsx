@@ -142,3 +142,43 @@ export function SessionsSection() {
     </section>
   );
 }
+
+/** Public profile look: preset theme (Pro) and custom link (Max) */
+export function ProfileLookSection() {
+  const [look, setLook] = useState<{ profileTheme: string | null; vanity: string | null; themes: string[] } | null>(null);
+  const [vanity, setVanity] = useState('');
+  const [msg, setMsg] = useState<string | null>(null);
+  useEffect(() => {
+    api.social.look().then((l) => (setLook(l), setVanity(l.vanity ?? ''))).catch(() => {});
+  }, []);
+  async function save(body: { profileTheme?: string | null; vanity?: string | null }) {
+    try {
+      setLook(await api.social.setLook(body));
+      setMsg('Saved.');
+    } catch (err) {
+      setMsg((err as Error).message);
+    }
+  }
+  if (!look) return null;
+  return (
+    <section className="card">
+      <h2>Public profile look</h2>
+      <p className="muted small">Only shows when your profile is public.</p>
+      <div className="row">
+        <label className="small">
+          Theme{' '}
+          <select value={look.profileTheme ?? ''} onChange={(e) => void save({ profileTheme: e.target.value || null })}>
+            <option value="">Default</option>
+            {look.themes.map((t) => <option key={t} value={t}>{t[0]!.toUpperCase() + t.slice(1)}</option>)}
+          </select>
+        </label>
+        <label className="small">
+          Custom link skystats.cc/p/{' '}
+          <input value={vanity} onChange={(e) => setVanity(e.target.value.toLowerCase())} maxLength={24} style={{ width: 140 }} />
+        </label>
+        <button className="ghost" onClick={() => void save({ vanity: vanity || null })}>Save link</button>
+      </div>
+      {msg && <p className="muted small">{msg} Themes come with Pro and custom links with Max.</p>}
+    </section>
+  );
+}

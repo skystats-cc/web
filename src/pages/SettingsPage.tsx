@@ -1,6 +1,6 @@
 import type { PrivacySettings } from '@skystats/api-client';
 import { useEffect, useState } from 'react';
-import { DiscordSection, SessionsSection } from '../components/AccountSections';
+import { DiscordSection, ProfileLookSection, SessionsSection } from '../components/AccountSections';
 import { api } from '../lib/api';
 import { Link, navigate } from '../lib/router';
 import { useSession } from '../lib/session';
@@ -95,6 +95,7 @@ export function SettingsPage() {
         )}
       </section>
 
+      <ProfileLookSection />
       <DiscordSection />
       <SessionsSection />
 

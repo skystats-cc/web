@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState, type FormEvent } from 'react';
 import { api } from '../lib/api';
 import { coins } from '../lib/format';
 import { GatedSection, useGated } from './Gate';
+import { AchievementsCard, FeedCard } from './Social';
 import { LineChart } from './LineChart';
 
 const dateFmt = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short' });
@@ -31,6 +32,10 @@ export function Dashboard({ profiles }: { profiles: Profile[] }) {
       <div className="grid two">
         <ComparePeriods profileId={profileId} />
         <Notes profileId={profileId} />
+      </div>
+      <div className="grid two">
+        <AchievementsCard />
+        <FeedCard />
       </div>
       <Drops />
     </>

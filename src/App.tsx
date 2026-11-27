@@ -10,6 +10,8 @@ import { AlertsPage } from './pages/AlertsPage';
 import { BazaarPage } from './pages/bazaar/BazaarPage';
 import { ItemPage } from './pages/bazaar/ItemPage';
 import { BillingPage } from './pages/BillingPage';
+import { LeaderboardsPage } from './pages/LeaderboardsPage';
+import { WrappedPage } from './pages/WrappedPage';
 import { CoopPage } from './pages/CoopPage';
 import { CustomMethodPage } from './pages/methods/CustomMethodPage';
 import { MethodPage } from './pages/methods/MethodPage';
@@ -33,6 +35,8 @@ export function App() {
   else if (path === '/settings') page = <SettingsPage />;
   else if (path === '/alerts') page = <AlertsPage />;
   else if (path.startsWith('/coop/')) page = <CoopPage profileId={decodeURIComponent(path.slice(6))} />;
+  else if (path === '/leaderboards') page = <LeaderboardsPage />;
+  else if (path === '/wrapped') page = <WrappedPage />;
   else if (path === '/bazaar') page = <BazaarPage />;
   else if (path.startsWith('/bazaar/')) page = <ItemPage id={decodeURIComponent(path.slice(8)).toUpperCase()} />;
   else if (path === '/methods') page = <MethodsPage />;

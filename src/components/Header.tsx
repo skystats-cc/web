@@ -25,6 +25,7 @@ export function Header() {
           {nav('/', 'Status')}
           {nav('/bazaar', 'Bazaar')}
           {nav('/methods', 'Methods')}
+          {nav('/leaderboards', 'Leaderboards')}
           {account && nav('/me', 'My profiles')}
           {account && nav('/alerts', 'Alerts')}
           {nav('/pricing', 'Plans')}

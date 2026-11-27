@@ -4,12 +4,24 @@ import { useEffect, useState } from 'react';
 import { LineChart } from '../components/LineChart';
 import { api } from '../lib/api';
 import { avatarUrl, coins, GAME_MODES } from '../lib/format';
+import { useSession } from '../lib/session';
 
 const dateFmt = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short' });
 
 export function PublicProfilePage({ name }: { name: string }) {
   const [p, setP] = useState<PublicPlayer | null>(null);
   const [missing, setMissing] = useState(false);
+  const { account } = useSession();
+  const [following, setFollowing] = useState(false);
+  const [copied, setCopied] = useState(false);
+  useEffect(() => {
+    if (account) api.social.following().then((r) => setFollowing(r.following.some((f) => f.username?.toLowerCase() === name.toLowerCase()))).catch(() => {});
+  }, [account?.uuid, name]); // eslint-disable-line react-hooks/exhaustive-deps
+  async function toggleFollow() {
+    if (following) await api.social.unfollow(name).catch(() => {});
+    else await api.social.follow(name).catch(() => {});
+    setFollowing(!following);
+  }
 
   useEffect(() => {
     setP(null);
@@ -33,12 +45,21 @@ export function PublicProfilePage({ name }: { name: string }) {
   if (!p) return <main className="wrap narrow" />;
 
   return (
-    <main className="wrap">
+    <main className={`wrap theme-${p.theme ?? 'none'}`}>
       <section className="me-head">
         <img className="avatar-lg" src={avatarUrl(p.uuid, 64)} alt="" width={64} height={64} />
         <div className="me-info">
           <h1>{p.username}</h1>
           <p className="muted">{p.usesMod ? 'Uses the SkyStats mod' : 'On SkyStats'}</p>
+          {p.badges.length > 0 && (
+            <div className="row">{p.badges.map((b) => <span key={b.key} className="badge accent">{b.name}</span>)}</div>
+          )}
+        </div>
+        <div className="me-actions">
+          {account && account.uuid !== p.uuid && (
+            <button className="ghost" onClick={() => void toggleFollow()}>{following ? 'Following' : 'Follow'}</button>
+          )}
+          <button className="ghost" onClick={() => void navigator.clipboard.writeText(window.location.href).then(() => setCopied(true))}>{copied ? 'Link copied' : 'Share'}</button>
         </div>
       </section>
       <div className="profiles">
