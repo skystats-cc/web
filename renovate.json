@@ -1,0 +1,12 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended", ":semanticCommitTypeAll(chore)", "schedule:weekends"],
+  "timezone": "Europe/London",
+  "labels": ["dependencies"],
+  "prConcurrentLimit": 5,
+  "packageRules": [
+    { "matchUpdateTypes": ["minor", "patch"], "matchCurrentVersion": "!/^0/", "groupName": "minor and patch updates" },
+    { "matchPackageNames": ["@skystats/api-client"], "enabled": false }
+  ],
+  "vulnerabilityAlerts": { "labels": ["security"], "schedule": ["at any time"] }
+}

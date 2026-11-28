@@ -38,3 +38,23 @@ export function Link({ href, onClick, ...rest }: AnchorHTMLAttributes<HTMLAnchor
     />
   );
 }
+
+/** A value kept in the URL query (?range=30d) so a view can be bookmarked and shared */
+export function useQueryParam<T extends string>(key: string, allowed: readonly T[], fallback: T): [T, (v: T) => void] {
+  const path = usePath();
+  const read = () => {
+    const v = new URLSearchParams(window.location.search).get(key);
+    return v && (allowed as readonly string[]).includes(v) ? (v as T) : fallback;
+  };
+  const [value, setValue] = useState<T>(read);
+  useEffect(() => setValue(read()), [path]); // eslint-disable-line react-hooks/exhaustive-deps
+  const set = (v: T) => {
+    const q = new URLSearchParams(window.location.search);
+    if (v === fallback) q.delete(key);
+    else q.set(key, v);
+    const qs = q.toString();
+    window.history.replaceState(null, '', `${window.location.pathname}${qs ? `?${qs}` : ''}`);
+    setValue(v);
+  };
+  return [value, set];
+}

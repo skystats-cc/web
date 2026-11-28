@@ -12,6 +12,16 @@
 		reverse_proxy {$API_UPSTREAM:api:3000}
 	}
 
+	# Link-preview bots get a tiny page with Open Graph tags for shareable pages (the SPA has none)
+	@ogbots {
+		header_regexp User-Agent (?i)(discordbot|twitterbot|facebookexternalhit|slackbot|telegrambot|whatsapp|linkedinbot|redditbot)
+		path /p/* /bazaar/*
+	}
+	handle @ogbots {
+		rewrite * /v1/og/page{uri}
+		reverse_proxy {$API_UPSTREAM:api:3000}
+	}
+
 	# Never expose admin routes through the website
 	handle /admin* {
 		respond 404
