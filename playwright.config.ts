@@ -15,5 +15,13 @@ export default defineConfig({
     { name: 'desktop', use: { ...devices['Desktop Chrome'] } },
     { name: 'mobile', use: { ...devices['Pixel 7'] } },
   ],
-  webServer: { command: 'npx vite build && npx vite preview --port 4173 --strictPort', url: 'http://127.0.0.1:4173', reuseExistingServer: !process.env.CI, timeout: 120_000 },
+  // --host 127.0.0.1: on GitHub's runners "localhost" resolves to IPv6 (::1) first, so vite preview
+  // listened on ::1 while Playwright waited on 127.0.0.1 and timed out. Bind the address we wait on.
+  webServer: {
+    command: 'npx vite build && npx vite preview --host 127.0.0.1 --port 4173 --strictPort',
+    url: 'http://127.0.0.1:4173',
+    reuseExistingServer: !process.env.CI,
+    timeout: 120_000,
+    stdout: 'pipe', // show the build and server output in the CI log if it fails again
+  },
 });
