@@ -43,6 +43,8 @@ export function PrivacyNotice() {
           <tr><td>Notifications we send you, and whether a Discord DM was delivered</td><td>Your inbox and DM delivery</td><td>Contract</td></tr>
           <tr><td>Session records (browser type, when you last used it)</td><td>To keep you signed in and let you sign out other devices</td><td>Contract</td></tr>
           <tr><td>Plan, Stripe customer ID and subscription status (Stripe holds your card details, not us)</td><td>To provide what you paid for</td><td>Contract; legal obligation for tax records</td></tr>
+          <tr><td>API keys (stored only as a hash) and webhook addresses you add</td><td>To let your own tools read your data and receive your alerts</td><td>Contract</td></tr>
+          <tr><td>Gift codes you buy or redeem (stored only as a hash), and a creator code if you arrived through a creator&rsquo;s link</td><td>To deliver the gift; to pay the creator their share</td><td>Contract; legitimate interests</td></tr>
           <tr><td>IP address and request logs</td><td>Security, preventing abuse, rate limiting</td><td>Legitimate interests</td></tr>
           <tr><td>A log of privacy, billing and deletion actions</td><td>To show we did what you asked</td><td>Legal obligation (accountability)</td></tr>
         </tbody>
@@ -58,6 +60,8 @@ export function PrivacyNotice() {
         <li><strong>Cloudflare</strong> carries traffic to our server and protects it from attacks.</li>
         <li><strong>Mojang</strong> confirms you own your Minecraft account; <strong>Hypixel</strong> receives your UUID when we look up your profiles.</li>
         <li><strong>mc-heads.net</strong> serves player head pictures, so your browser sends it your IP address when a page shows one.</li>
+        <li><strong>Your own webhook</strong>: if you add one, we send your alerts to the address you chose.</li>
+        <li><strong>Our error-tracking service</strong> (if switched on) receives crash reports with user ids, IP addresses, cookies and request contents removed.</li>
         <li><strong>Discord</strong> confirms your identity when you connect it, delivers DMs you opted into, and receives what the bot posts when you use it.</li>
       </ul>
       <p>
@@ -77,7 +81,8 @@ export function PrivacyNotice() {
           <tr><td>Daily game answers</td><td>30 days</td></tr>
           <tr><td>Account, profiles, Discord link, alerts, goals, notes and custom methods</td><td>Until you delete them or your account</td></tr>
           <tr><td>Sessions</td><td>30 days (browser) or 90 days (mod), then removed</td></tr>
-          <tr><td>Request logs</td><td>Up to 30 days</td></tr>
+          <tr><td>Request logs</td><td>Up to 30 days (searchable server logs: 14 days)</td></tr>
+          <tr><td>Unredeemed gift codes</td><td>2 years, then they expire</td></tr>
           <tr><td>Billing records</td><td>6 years, as UK tax law requires (held by Stripe)</td></tr>
           <tr><td>Backups</td><td>Up to 30 days, then overwritten</td></tr>
         </tbody>
@@ -100,6 +105,11 @@ export function PrivacyNotice() {
       <p>
         We use one cookie, <code>ss_session</code>, which keeps you signed in. It is strictly necessary, so it doesn&rsquo;t need consent.
         We don&rsquo;t use analytics, advertising or tracking cookies. If we ever add any, we&rsquo;ll ask first.
+      </p>
+      <p>
+        Display choices you make (theme, chart colours, number style) and when your session was last refreshed are saved in your
+        browser&rsquo;s local storage, only because you asked for them. They never leave your device. The site also stores its own
+        files so it can open offline; your SkyStats data is never stored that way.
       </p>
 
       <h2>Changes</h2>
