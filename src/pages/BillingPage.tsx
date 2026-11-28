@@ -1,6 +1,7 @@
-import type { Entitlement } from '@skystats/api-client';
-import { useEffect, useState } from 'react';
+import { SkystatsApiError, type Entitlement } from '@skystats/api-client';
+import { useEffect, useState, type FormEvent } from 'react';
 import { api } from '../lib/api';
+import { gbp, PLANS } from '../lib/legal';
 import { Link } from '../lib/router';
 import { useSession } from '../lib/session';
 
@@ -68,6 +69,58 @@ export function BillingPage() {
         </div>
         <p className="muted small">Cancelling, changing plan and invoices are handled by Stripe. Cancel within 14 days of buying for a full refund.</p>
       </section>
+      <GiftsCard onRedeemed={(x) => setE(x)} />
     </main>
+  );
+}
+
+function GiftsCard({ onRedeemed }: { onRedeemed: (e: Entitlement) => void }) {
+  const [code, setCode] = useState('');
+  const [msg, setMsg] = useState<string | null>(null);
+  const [busy, setBusy] = useState(false);
+  const gifted = new URLSearchParams(window.location.search).get('gift') === 'success';
+
+  async function buy(tier: 'pro' | 'max') {
+    setBusy(true);
+    try {
+      window.location.href = (await api.billing.gift(tier)).url;
+    } catch {
+      setMsg('Gifts aren’t available right now.');
+      setBusy(false);
+    }
+  }
+  async function redeem(ev: FormEvent) {
+    ev.preventDefault();
+    setBusy(true);
+    try {
+      onRedeemed(await api.billing.redeem(code));
+      setMsg('Redeemed. Enjoy!');
+      setCode('');
+    } catch (err) {
+      setMsg(err instanceof SkystatsApiError ? err.message : 'That code didn’t work.');
+    } finally {
+      setBusy(false);
+    }
+  }
+  return (
+    <section className="card" style={{ marginTop: 20 }}>
+      <h2>Gifts</h2>
+      {gifted && <p className="notice">Thanks! The gift code is in your <Link href="/alerts">inbox</Link> in a minute or two.</p>}
+      <p className="muted small">
+        Give a friend one month of Pro ({gbp(PLANS[1]!.monthly)}) or Max ({gbp(PLANS[2]!.monthly)}), including VAT. It&rsquo;s a one-off payment, it never renews, and the code lasts two years. Not redeemed yet? We refund it within 14 days of buying.
+      </p>
+      <div className="row">
+        <button className="ghost" disabled={busy} onClick={() => void buy('pro')}>Gift Pro</button>
+        <button className="ghost" disabled={busy} onClick={() => void buy('max')}>Gift Max</button>
+      </div>
+      <form className="row" style={{ marginTop: 12 }} onSubmit={(e) => void redeem(e)}>
+        <label className="grow">
+          <span className="sr-only">Gift code</span>
+          <input value={code} onChange={(e) => setCode(e.target.value)} placeholder="ABCD-EFGH-JKLM-NPQR" maxLength={24} autoComplete="off" />
+        </label>
+        <button type="submit" disabled={busy || code.trim().length < 16}>Redeem</button>
+      </form>
+      {msg && <p className="small">{msg}</p>}
+    </section>
   );
 }

@@ -11,6 +11,27 @@ interface Session {
   logout: () => Promise<void>;
 }
 
+// Swap the session cookie for a fresh one once a day, so a copied cookie stops working
+function rotateDaily() {
+  let last = 0;
+  try {
+    last = Number(window.localStorage.getItem('ss:rotatedAt') ?? 0);
+  } catch {
+    return;
+  }
+  if (Date.now() - last < 86_400_000) return;
+  api.platform
+    .rotateSession()
+    .then(() => {
+      try {
+        window.localStorage.setItem('ss:rotatedAt', String(Date.now()));
+      } catch {
+        /* ignore */
+      }
+    })
+    .catch(() => {});
+}
+
 const SessionContext = createContext<Session | null>(null);
 
 // The session itself is an HttpOnly cookie the page can't read; we just ask the API who we are.
@@ -21,6 +42,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
   const reload = useCallback(async () => {
     try {
       setAccount(await api.me.get());
+      rotateDaily();
     } catch (err) {
       if (err instanceof SkystatsApiError && err.status === 401) setAccount(null);
     } finally {

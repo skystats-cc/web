@@ -4,7 +4,7 @@ import { GatedSection, useGated } from '../../components/Gate';
 import { LineChart } from '../../components/LineChart';
 import { api } from '../../lib/api';
 import { coins } from '../../lib/format';
-import { Link } from '../../lib/router';
+import { Link, useQueryParam } from '../../lib/router';
 import { useSession } from '../../lib/session';
 
 const RANGES = [
@@ -24,7 +24,9 @@ export function ItemPage({ id }: { id: string }) {
   const { account } = useSession();
   const [p, setP] = useState<BazaarProduct | null>(null);
   const [missing, setMissing] = useState(false);
-  const [days, setDays] = useState(7);
+  const [rangeKey, setRangeKey] = useQueryParam('range', RANGES.map(([l]) => l), RANGES.find(([, d]) => d === 7)![0]);
+  const days = RANGES.find(([l]) => l === rangeKey)![1];
+  const setDays = (d: number) => setRangeKey(RANGES.find(([, x]) => x === d)![0]);
   const [hist, setHist] = useState<BazaarSnapshot[]>([]);
   const [side, setSide] = useState<'buy' | 'sell'>('buy');
   const [markers, setMarkers] = useState<{ t: number; label: string }[]>([]);

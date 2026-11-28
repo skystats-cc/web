@@ -2,7 +2,7 @@ import type { MoneyHistory, MoneyRange, Profile } from '@skystats/api-client';
 import { useEffect, useMemo, useState } from 'react';
 import { api } from '../lib/api';
 import { coins } from '../lib/format';
-import { Link } from '../lib/router';
+import { Link, useQueryParam } from '../lib/router';
 import { LineChart } from './LineChart';
 
 const RANGES: MoneyRange[] = ['1d', '7d', '30d', '90d', '1y', 'all'];
@@ -11,7 +11,7 @@ const timeFmt = new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-d
 
 export function MoneyCard({ profiles }: { profiles: Profile[] }) {
   const [profileId, setProfileId] = useState(profiles.find((p) => p.selected)?.id ?? profiles[0]?.id);
-  const [range, setRange] = useState<MoneyRange>('7d');
+  const [range, setRange] = useQueryParam<MoneyRange>('range', RANGES, '7d');
   const [log, setLog] = useState(false);
   const [data, setData] = useState<MoneyHistory | null>(null);
   const [error, setError] = useState(false);

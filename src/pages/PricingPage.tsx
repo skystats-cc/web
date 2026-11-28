@@ -10,12 +10,18 @@ export function PricingPage() {
   const { account } = useSession();
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  // Creator codes come from a creator's link (?creator=name). They're paid partnerships, so the
+  // page says so (ASA/CAP code). No discount is promised here; discount codes go on Stripe's page.
+  const [creator] = useState(() => {
+    const c = new URLSearchParams(window.location.search).get('creator');
+    return c && /^[A-Za-z0-9_-]{2,24}$/.test(c) ? c : null;
+  });
 
   async function choose(tier: 'pro' | 'max') {
     setBusy(tier);
     setError(null);
     try {
-      window.location.href = (await api.billing.checkout(tier)).url;
+      window.location.href = (await api.billing.checkout(tier, 'month', creator ?? undefined)).url;
     } catch {
       setError('Checkout isn’t available right now.');
       setBusy(null);
@@ -29,6 +35,11 @@ export function PricingPage() {
         <p className="lede">Free covers the basics. Paid plans keep your history for longer and unlock more methods and alerts.</p>
       </section>
       {error && <p className="error">{error}</p>}
+      {creator && (
+        <p className="notice small">
+          <span className="badge">Ad</span> You came from <strong>{creator}</strong>&rsquo;s link. SkyStats pays {creator} a share if you subscribe. It doesn&rsquo;t change your price.
+        </p>
+      )}
       <div className="grid plans">
         {PLANS.map((p) => (
           <section key={p.tier} className="card plan">
@@ -62,6 +73,7 @@ export function PricingPage() {
           <li>Cancel at any time from the billing page, in as few steps as it took to sign up. You keep paid features until the end of the month you paid for.</li>
           <li>Changed your mind? Cancel within 14 days of buying for a full refund.</li>
           <li>If a payment fails, paid features stay on for 7 days while you sort it out.</li>
+          <li>Got a discount code? Enter it on the payment page.</li>
           <li>When you leave a paid plan, older history is hidden for 30 days, then deleted. Resubscribe within 30 days to get it back.</li>
         </ul>
         <p className="muted small">

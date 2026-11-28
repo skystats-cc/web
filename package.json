@@ -11,14 +11,16 @@
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "e2e": "playwright test"
   },
   "dependencies": {
-    "@skystats/api-client": "github:skystats-cc/api-spec#v0.8.0",
+    "@skystats/api-client": "github:skystats-cc/api-spec#v0.9.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1"
   },
   "devDependencies": {
+    "@playwright/test": "^1.65.1",
     "@types/node": "^22.10.0",
     "@types/react": "^19.3.3",
     "@types/react-dom": "^19.3.0",

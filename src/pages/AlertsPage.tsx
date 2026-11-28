@@ -224,6 +224,8 @@ function RulesCard(props: { paid: boolean; rules: AlertRule[]; items: { id: stri
   );
 }
 
+const etaFmt = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+
 function GoalsCard(props: { goals: Goal[]; profiles: Profile[]; paid: boolean; onChange: () => Promise<void>; onError: (e: unknown) => void }) {
   const [profileId, setProfileId] = useState('');
   const [target, setTarget] = useState('');
@@ -253,6 +255,16 @@ function GoalsCard(props: { goals: Goal[]; profiles: Profile[]; paid: boolean; o
               <span>
                 <strong>{coins(g.target)}</strong> on {pname(g.profileId)}
                 {g.reachedAt ? <span className="badge accent">Reached</span> : null}
+                {!g.reachedAt && (
+                  <span className="muted small">
+                    {' '}
+                    {g.eta
+                      ? `· about ${etaFmt.format(new Date(g.eta))} at your recent pace (${coins(g.perDay ?? 0)}/day)`
+                      : g.perDay !== null && g.perDay !== undefined
+                        ? '· no estimate: your balance hasn’t been growing lately'
+                        : ''}
+                  </span>
+                )}
               </span>
               <button className="ghost right" onClick={() => void api.alerts.removeGoal(g.id).then(props.onChange)}>
                 Delete

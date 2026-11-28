@@ -1,6 +1,14 @@
-// 1234 -> "1.23k", 3_400_000 -> "3.4M", 1_100_000_000 -> "1.1B"
+let numberStyle: 'compact' | 'full' = 'compact';
+/** Set from the display preference: "1.23M" (compact) or "1,234,567" (full) */
+export function setNumberStyle(style: 'compact' | 'full') {
+  numberStyle = style;
+}
+const fullFmt = new Intl.NumberFormat('en-GB', { maximumFractionDigits: 0 });
+
+// 1234 -> "1.23k", 3_400_000 -> "3.4M", 1_100_000_000 -> "1.1B" (or "1,234" with the full style)
 export function coins(n: number | null | undefined): string {
   if (n === null || n === undefined) return '—';
+  if (numberStyle === 'full') return fullFmt.format(n);
   const abs = Math.abs(n);
   const units: [number, string][] = [
     [1e12, 'T'],

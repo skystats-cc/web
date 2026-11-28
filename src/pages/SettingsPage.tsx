@@ -1,3 +1,4 @@
+import { DisplaySection } from '../components/DisplaySection';
 import type { PrivacySettings } from '@skystats/api-client';
 import { useEffect, useState } from 'react';
 import { DiscordSection, ProfileLookSection, SessionsSection } from '../components/AccountSections';
@@ -33,9 +34,10 @@ export function SettingsPage() {
     return (
       <main className="wrap narrow">
         <section className="card center">
-          <h2>Sign in to change your settings</h2>
+          <h2>Sign in to change your privacy settings</h2>
           <Link href="/link" className="button">Link Minecraft</Link>
         </section>
+        <DisplaySection />
       </main>
     );
   }
@@ -66,7 +68,7 @@ export function SettingsPage() {
 
   return (
     <main className="wrap narrow">
-      <h1 className="page-title">Privacy and data</h1>
+      <h1 className="page-title">Settings, privacy and data</h1>
       <p className="muted">
         Everything that shares your data is off until you turn it on. Read the <Link href="/privacy">privacy notice</Link> to see what we keep and why.
       </p>
@@ -95,6 +97,7 @@ export function SettingsPage() {
         )}
       </section>
 
+      <DisplaySection />
       <ProfileLookSection />
       <DiscordSection />
       <SessionsSection />

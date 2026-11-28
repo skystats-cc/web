@@ -13,3 +13,13 @@ describe('format', () => {
     expect(mmss(-5)).toBe('0:00');
   });
 });
+
+describe('number style', () => {
+  it('switches between compact and full', async () => {
+    const { coins, setNumberStyle } = await import('./format');
+    setNumberStyle('full');
+    expect(coins(1234567.8)).toBe('1,234,568');
+    setNumberStyle('compact');
+    expect(coins(1234567)).toBe('1.23M');
+  });
+});

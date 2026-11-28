@@ -1,3 +1,5 @@
+import { exportChart } from '../lib/chartExport';
+import { t } from '../lib/i18n';
 import { useMemo, useRef, useState, type PointerEvent } from 'react';
 import { linePath, logTicks, nearest, niceTicks, scale, type Point } from '../lib/chart';
 
@@ -106,6 +108,14 @@ export function LineChart({ points, band, height = 240, log = false, formatValue
           <span>{formatTime(h.t)}</span>
         </figcaption>
       )}
+      <div className="chart-export">
+        <button type="button" className="ghost tiny" title={t('chart.export')} onClick={() => svgRef.current && void exportChart(svgRef.current, label, 'png')}>
+          PNG
+        </button>
+        <button type="button" className="ghost tiny" title={t('chart.export')} onClick={() => svgRef.current && void exportChart(svgRef.current, label, 'svg')}>
+          SVG
+        </button>
+      </div>
     </figure>
   );
 }
